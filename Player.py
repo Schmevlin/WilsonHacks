@@ -19,10 +19,12 @@ class player(pygame.sprite.Sprite):
         self.width, self.height = width, height
     
     def draw(self):
-        pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(self.x, self.y, self.width, self.height))
+        m_screen = self.screen
+        pygame.m_screen.blit(self.image, [self.x, self.y])
 
     def move(self, x, y):
         self.x += x
         self.y += y
+
     def nextSprite():
-        curSprite += 1
+        self.curSprite += 1
