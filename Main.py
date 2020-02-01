@@ -20,7 +20,13 @@ while 1:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
+        player.move(0, -1)
+    if keys[pygame.K_s]:
         player.move(0, 1)
+    if keys[pygame.K_d]:
+        player.rotate(90)
+    if keys[pygame.K_a]:
+        player.rotate(90)
 
     screen.fill(white)
 

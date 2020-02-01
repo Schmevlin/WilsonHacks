@@ -20,11 +20,16 @@ class player(pygame.sprite.Sprite):
     
     def draw(self):
         m_screen = self.screen
-        pygame.m_screen.blit(self.image, [self.x, self.y])
+        m_screen.blit(self.image, [self.x, self.y])
 
     def move(self, x, y):
         self.x += x
         self.y += y
 
-    def nextSprite():
+    def rotate(self, degrees):
+        pygame.transform.rotate(self.image, degrees)
+
+    def nextSprite(self):
         self.curSprite += 1
+        self.curSprite %= 5
+        self.image = self.sprites[self.curSprite]
