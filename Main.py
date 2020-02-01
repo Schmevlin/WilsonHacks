@@ -35,6 +35,7 @@ while 1:
     screen.fill(blue)
 
     player.draw()
+    player.lookRay()
 
     if(changeSpriteMaybe % 5 == 0):
         player.nextSprite()

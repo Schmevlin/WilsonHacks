@@ -24,8 +24,12 @@ class player(pygame.sprite.Sprite):
     
     def draw(self):
         m_screen = self.screen
+<<<<<<< Updated upstream
         m_screen.blit(pygame.transform.rotate(self.image, self.toDegrees(self.degrees) - 90), [self.actualX(), self.actualY()])
         print(self.degrees)
+=======
+        m_screen.blit(pygame.transform.rotate(self.image, -self.toDegrees(self.degrees)), [self.actualX(), self.actualY()])
+>>>>>>> Stashed changes
 
     def move(self, dist):
         self.x += dist * math.cos(self.degrees + (math.pi / 2))
@@ -51,3 +55,5 @@ class player(pygame.sprite.Sprite):
 
     def toDegrees(self, angle):
         return angle * (180 / math.pi)
+    def lookRay(self):
+        pygame.draw.line(self.screen, (0,0,0), (self.x, self.y), (self.x + 150*math.cos(self.degrees), self.y + 150*math.sin(self.degrees)))
