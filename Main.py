@@ -1,16 +1,17 @@
 import pygame
 import Player
+import math
 
 pygame.init()
 width = 600
-height = 550
+height = 600
 size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
 blue = 0, 0, 255
 
 screen = pygame.display.set_mode(size)
-player = Player.player(100, 100, screen)
+player = Player.player(300, 300, screen)
 
 changeSpriteMaybe = 0
 while 1:
@@ -27,9 +28,9 @@ while 1:
     if keys[pygame.K_s]:
         player.move(3)
     if keys[pygame.K_d]:
-        player.rotate(-.5)
+        player.rotate(-math.pi / 24)
     if keys[pygame.K_a]:
-        player.rotate(.5)
+        player.rotate(math.pi / 24)
 
     screen.fill(blue)
 
