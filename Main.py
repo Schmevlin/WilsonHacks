@@ -12,6 +12,15 @@ black = 0, 0, 0
 blue = 0, 0, 255
 maxDepth = 1000
 
+coolFacts = [
+    r"in 2013 over 90 million pounds of fish were caught",
+    r"About 38.5 million tonnes of bycatch results from current preferred fishing practice each year",
+    r"Over just 40 years there has been a decrease recorded in marine species of 39%",
+    r"Almost 30% of fish stocks commercially fished are over-fished",
+    r"In the North East Atlantic and nearby seas, 39% of fish stocks are classified as overfished. In the Mediterranean Sea and the Black Sea there is sufficient data for 85 stocks, which shows that 88% of these (75) are overfished",
+    r"Today, each person eats on average 19.2kg of fish a year – around twice as much as 50 years ago"
+]
+
 screen = pygame.display.set_mode(size)
 player = Player.player(300, 300, screen, maxDepth)
 net = Net.net(width, height, screen, 3)
