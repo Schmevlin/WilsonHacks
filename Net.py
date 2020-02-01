@@ -20,3 +20,6 @@ class net(pygame.sprite.Sprite):
         if (self.y > (self.height + 100)) :
             del(self)
             return True
+    
+    def moveRight(self, dist):
+        self.x += dist

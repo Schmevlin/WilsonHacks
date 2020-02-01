@@ -11,24 +11,31 @@ class player(pygame.sprite.Sprite):
         pygame.image.load("Images/dolphin6.png")
     ]
     curSprite = 0
-    degrees = math.pi / 2
+    degrees = 0
     dist = math.sqrt((200 / 2)**2 + (100 / 2)**2)
     width = 200
     height = 100
+    depth = 1000
 
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, screen, depth):
         pygame.sprite.Sprite.__init__(self)
         self.image = self.sprites[self.curSprite]
         self.screen = screen
+        self.depth = depth
         self.x, self.y = x, y
+        self.updateRect()
     
     def draw(self):
         m_screen = self.screen
-        m_screen.blit(pygame.transform.rotate(self.image, self.toDegrees(self.degrees) - 90), [self.actualX(), self.actualY()])
+        m_screen.blit(pygame.transform.rotate(self.image, self.toDegrees(self.degrees)), [self.actualX(), self.actualY()])
+        print(self.degrees)
 
     def move(self, dist):
-        self.x += dist * math.cos(self.degrees + (math.pi / 2))
-        self.y += dist * math.sin(self.degrees + (math.pi / 2))
+        # self.x += dist * math.cos(-self.degrees)
+        # self.y += dist * math.sin(-self.degrees)
+        self.updateRect()
+        self.depth += dist * math.sin(-self.degrees)
+        return dist * math.cos(-self.degrees)
 
     def rotate(self, degrees):
         self.degrees += degrees
@@ -40,15 +47,19 @@ class player(pygame.sprite.Sprite):
         self.image = self.sprites[self.curSprite]
 
     def actualX(self):
-        return self.x - (self.width / 2) + (math.sin(math.pi + self.degrees) * self.dist)
+        return self.x - (self.width / 2)
 
     def actualY(self):
-        return self.y - (self.height / 2) + (math.cos(math.pi + self.degrees) * self.dist)
+        return self.y - (self.height / 2)
 
     def toRadians(self, angle):
         return angle * (math.pi / 180)
 
     def toDegrees(self, angle):
         return angle * (180 / math.pi)
+
     def lookRay(self):
-        pygame.draw.line(self.screen, (0,0,0), (self.x, self.y), (self.x + 150*math.cos(self.degrees), self.y + 150*math.sin(self.degrees)))
+        pygame.draw.line(self.screen, (0,0,0), (self.x, self.y), (self.x + 150*math.cos(-self.degrees), self.y + 150*math.sin(-self.degrees)))
+
+    def updateRect(self):
+        self.rect = pygame.Rect(self.actualX(), self.actualY(), self.width, self.height)

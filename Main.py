@@ -10,9 +10,10 @@ size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
 blue = 0, 0, 255
+maxDepth = 1000
 
 screen = pygame.display.set_mode(size)
-player = Player.player(300, 300, screen)
+player = Player.player(300, 300, screen, maxDepth)
 net = Net.net(width, height, screen, 3)
 
 changeSpriteMaybe = 0
@@ -26,15 +27,17 @@ while 1:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        player.move(-3)
+        net.moveRight(player.move(3))
     if keys[pygame.K_s]:
-        player.move(3)
+        net.moveRight(player.move(-3))
     if keys[pygame.K_d]:
         player.rotate(-math.pi / 24)
     if keys[pygame.K_a]:
         player.rotate(math.pi / 24)
 
-    screen.fill(blue)
+    blue = 50 + 200 * (1 - (player.depth / maxDepth))
+
+    screen.fill((0, 0, blue))
 
     if (net.update()):
         net = Net.net(width, height, screen, 3)
