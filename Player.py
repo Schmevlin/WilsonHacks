@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class player(pygame.sprite.Sprite):
     sprites = [
@@ -23,9 +24,9 @@ class player(pygame.sprite.Sprite):
         m_screen = self.screen
         m_screen.blit(pygame.transform.rotate(self.image, self.degrees), [self.x, self.y])
 
-    def move(self, x, y):
-        self.x += x
-        self.y += y
+    def move(self, dist):
+        self.x += dist * math.cos(self.degrees - 90)
+        self.y += dist * math.sin(self.degrees - 90)
 
     def rotate(self, degrees):
         self.degrees += degrees

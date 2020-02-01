@@ -11,6 +11,7 @@ black = 0, 0, 0
 screen = pygame.display.set_mode(size)
 player = Player.player(100, 100, 100, 100, screen)
 
+changeSpriteMaybe = 0
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -20,17 +21,21 @@ while 1:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        player.move(0, -1)
+        player.move(-3)
     if keys[pygame.K_s]:
-        player.move(0, 1)
+        player.move(3)
     if keys[pygame.K_d]:
-        player.rotate(.1)
+        player.rotate(-.5)
     if keys[pygame.K_a]:
-        player.rotate(.1)
+        player.rotate(.5)
 
     screen.fill(white)
 
     player.draw()
-    player.nextSprite()
+
+    if(changeSpriteMaybe % 5 == 0):
+        player.nextSprite()
     #pygame.draw.rect(screen, black, player.image)
     pygame.display.flip()
+    pygame.time.wait(16)
+    changeSpriteMaybe  += 1 
