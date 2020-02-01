@@ -4,6 +4,7 @@ import Net
 import random
 import math
 import Bubble
+import Explosion
 
 pygame.init()
 pygame.font.init()
@@ -22,6 +23,7 @@ won = False
 boat = pygame.image.load("Images/boat.png")
 boatX = width / 4
 endCondition = 0
+actualWon = False
 
 coolFacts = [
     r"In 2013 over 90 million pounds of fish were caught",
@@ -32,7 +34,7 @@ coolFacts = [
     r"Today, each person eats on average 19.2kg of fish a year – around twice as much as 50 years ago"
 ]
 
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 player = Player.player(width / 2, height * 2 / 3, screen, maxDepth)
 nets = []
 bubbles = []
@@ -63,6 +65,8 @@ while not done:
         player.rotate(-math.pi / 24)
     elif keys[pygame.K_a]:
         player.rotate(math.pi / 24)
+    if keys[pygame.K_ESCAPE]:
+        done = True
 
     if (player.depth < 0):
         won = True
@@ -78,16 +82,20 @@ while not done:
         endCondition = 1
         done = True
 
-
     screen.fill((0, 0, blue))
     for bubble in bubbles:
         bubble.move(dists)
         bubble.draw()
 
+
     pygame.draw.rect(screen, (230, 230, 255), pygame.Rect(0, 0, width, -player.depth))
     if (-player.depth > 0):
         boatX -= dists[0]
         screen.blit(boat, [boatX, -player.depth - 140])
+
+    if (actualWon):
+        textsurface = myfont.render('You got your revenge and saved the world!', False, (0, 0, 255))
+        screen.blit(textsurface, [100, 100])
 
     for net in nets:
         if (not net.theChosenNet):
@@ -99,15 +107,19 @@ while not done:
                 control = False
                 player.x = net.x + (net.actualWidth / 2)
                 player.y = net.y + (net.actualHeight / 2)
-    
-    textsurface = myfont.render(coolFacts[random.randint(0, 5)], False, white)
-    # screen.blit(textsurface, [100, 100])
 
     for net in nets:
         net.drawBack()
 
     player.draw()
     # player.lookRay()
+
+    if (player.actualX() > boatX and player.actualX() < boatX + 300 and player.actualY() > (-player.depth - 140) and player.actualY() < (-player.depth - 140 + 150)):
+        explosion = Explosion.explosion(screen, boatX, -player.depth - 140)
+        explosion.explodeP1(boatX, -player.depth - 140)
+        boatX = 100000
+        explosion.explodeP2(boatX, -player.depth - 140)
+        actualWon = True
 
     for net in nets:
         net.drawFront()
@@ -118,6 +130,7 @@ while not done:
     for net in nets:
         if (net.y > height or net.y < -300 or net.x > width or net.x < -300):
             nets.remove(net)
+
     for bubble in bubbles:
         if (bubble.y > height or bubble.y < -25 or bubble.x > width or bubble.x < -25):
             bubbles.remove(bubble)
@@ -132,14 +145,23 @@ while not done:
 
 # end logic
 
+endMessages = [pygame.image.load("Images/message1.png"),
+               pygame.image.load("Images/message2.png"),
+               pygame.image.load("Images/message3.png"),
+               pygame.image.load("Images/message4.png"),
+               pygame.image.load("Images/message5.png"),
+               pygame.image.load("Images/message6.png")]
+
 if (endCondition == 0):
     pygame.quit()
 if (endCondition == 1):
-    textsurface = myfont.render(coolFacts[random.randint(0, 6)], False, white)
-    screen.fill(black)
-    screen.blit(textsurface, [0, 0])
+    screen.blit(endMessages[random.randint(0, 5)], [0, 0])
     pygame.display.flip()
     while(1):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+        
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
