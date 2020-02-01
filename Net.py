@@ -2,6 +2,9 @@ import pygame
 import random
 
 class net(pygame.sprite.Sprite):
+    actualWidth = 200
+    actualHeight = 100
+    
     def __init__(self, width, height, screen, speed):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Images/net.png")
@@ -21,3 +24,4 @@ class net(pygame.sprite.Sprite):
             del(self)
             return True
         self.x += -dists[0]
+    

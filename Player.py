@@ -28,7 +28,7 @@ class player(pygame.sprite.Sprite):
     def draw(self):
         m_screen = self.screen
         m_screen.blit(pygame.transform.rotate(self.image, self.toDegrees(self.degrees)), [self.actualX(), self.actualY()])
-        print(self.degrees)
+        # print(self.degrees)
 
     def move(self, dist):
         # self.x += dist * math.cos(-self.degrees)
@@ -63,3 +63,9 @@ class player(pygame.sprite.Sprite):
 
     def updateRect(self):
         self.rect = pygame.Rect(self.actualX(), self.actualY(), self.width, self.height)
+
+    def touching(self, net):
+        if self.x > net.x and self.x < net.x + net.actualWidth and self.y > net.y and self.y < net.y + net.actualHeight:
+            return True
+        else:
+            return False

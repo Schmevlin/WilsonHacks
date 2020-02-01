@@ -4,8 +4,8 @@ import Net
 import math
 
 pygame.init()
-width = 1600
-height = 900
+width = 600
+height = 600
 size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
@@ -50,13 +50,15 @@ while 1:
 
     if (net.move(dists)):
         net = Net.net(width, height, screen, 3)
+    if (player.touching(net)):
+        pygame.quit()
     net.draw()
     player.draw()
-    player.lookRay()
+    # player.lookRay()
 
     if(changeSpriteMaybe % 5 == 0):
         player.nextSprite()
     #pygame.draw.rect(screen, black, player.image)
     pygame.display.flip()
     pygame.time.wait(16)
-    changeSpriteMaybe  += 1 
+    changeSpriteMaybe += 1 
