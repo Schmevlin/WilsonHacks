@@ -39,17 +39,15 @@ while 1:
 
     if (control):
         dists = [0, 0]
-    else:
-        dists = [0, 9]
-
-    if (control):
         if keys[pygame.K_w]:
             dists = player.move(3)
         elif keys[pygame.K_s]:
             dists = player.move(-3)
     else:
+        dists = [0, 9]
         player.moveY(-3)
-    
+
+   
     if keys[pygame.K_d]:
         player.rotate(-math.pi / 24)
     elif keys[pygame.K_a]:
@@ -74,10 +72,11 @@ while 1:
             net.move(dists)
         if (control):
             if (player.touching(net)):
-                    net.theChosenNet = True
-                    control = False
-                    player.x = net.x + (net.actualWidth / 2)
-                    player.y = net.y + (net.actualHeight / 2)
+                player.die()
+                net.theChosenNet = True
+                control = False
+                player.x = net.x + (net.actualWidth / 2)
+                player.y = net.y + (net.actualHeight / 2)
     
     for net in nets:
         net.drawBack()

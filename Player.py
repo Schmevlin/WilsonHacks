@@ -2,14 +2,23 @@ import pygame
 import math
 
 class player(pygame.sprite.Sprite):
-    sprites = [
+    sprites = [[
         pygame.image.load("Images/dolphin1.png"),
         pygame.image.load("Images/dolphin2.png"),
         pygame.image.load("Images/dolphin3.png"),
         pygame.image.load("Images/dolphin4.png"),
         pygame.image.load("Images/dolphin5.png"),
         pygame.image.load("Images/dolphin6.png")
-    ]
+    ],
+    [
+        pygame.image.load("Images/dolphin1oof.png"),
+        pygame.image.load("Images/dolphin2oof.png"),
+        pygame.image.load("Images/dolphin3oof.png"),
+        pygame.image.load("Images/dolphin4oof.png"),
+        pygame.image.load("Images/dolphin5oof.png"),
+        pygame.image.load("Images/dolphin6oof.png")
+    ]]
+    dead= 0
     curSprite = 0
     degrees = 0
     dist = math.sqrt((200 / 2)**2 + (100 / 2)**2)
@@ -44,7 +53,7 @@ class player(pygame.sprite.Sprite):
     def nextSprite(self):
         self.curSprite += 1
         self.curSprite %= 5
-        self.image = self.sprites[self.curSprite]
+        self.image = self.sprites[self.dead][self.curSprite]
 
     def actualX(self):
         return self.x - (self.width / 2)
@@ -73,3 +82,5 @@ class player(pygame.sprite.Sprite):
     def moveY(self, dist):
         self.updateRect()
         self.depth -= dist
+    def die(self):
+        self.dead = 1
