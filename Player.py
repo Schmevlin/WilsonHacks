@@ -50,3 +50,5 @@ class player(pygame.sprite.Sprite):
 
     def toDegrees(self, angle):
         return angle * (180 / math.pi)
+    def lookRay(self):
+        pygame.draw.line(self.screen, (0,0,0), (self.x, self.y), (self.x + 150*math.cos(self.degrees), self.y + 150*math.sin(self.degrees)))

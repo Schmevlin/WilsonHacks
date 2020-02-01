@@ -40,6 +40,7 @@ while 1:
         net = Net.net(width, height, screen, 3)
     net.draw()
     player.draw()
+    player.lookRay()
 
     if(changeSpriteMaybe % 5 == 0):
         player.nextSprite()
