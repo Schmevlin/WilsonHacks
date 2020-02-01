@@ -16,7 +16,7 @@ size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
 blue = 0, 0, 255
-maxDepth = 1000
+maxDepth = 2000
 done = False
 control = True
 won = False
@@ -124,8 +124,13 @@ while not done:
     for net in nets:
         net.drawFront()
 
-    if (changeSpriteMaybe % 60 == 2 and control and not won):
-        nets.append(Net.net(width, height, screen, 3))
+    pygame.draw.rect(screen, black, pygame.Rect(width / 20, height * 2 / 5, width / 10, height / 5))
+    pygame.draw.rect(screen, (0, 0, 255), pygame.Rect((width / 20) + (width / 100), (height * 2 / 5) + (width / 100), (width / 10) - (width * 2 / 100), (height / 5) - 2 * (width / 100)))
+    bottom = (height * 2 / 5) + (width / 100) + (height / 5) - 2 * (width / 100)
+    pygame.draw.line(screen, (255, 0, 0), ((width / 20) + (width / 100), height - (bottom - ((height / 5) - 2 * (width / 100)) * (player.depth / (maxDepth + 457)))), ((width / 20) + (width / 100) + ((width / 10) - (width * 2 / 100)), height - (bottom - ((height / 5) - 2 * (width / 100)) * (player.depth / (maxDepth + 457)))))
+
+    if (changeSpriteMaybe % 45 == 0 and control and not won):
+        nets.append(Net.net(width, height, screen, 4))
 
     for net in nets:
         if (net.y > height or net.y < -300 or net.x > width or net.x < -300):
