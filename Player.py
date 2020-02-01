@@ -3,12 +3,12 @@ import math
 
 class player(pygame.sprite.Sprite):
     sprites = [
-        pygame.image.load("dolphin1.png"),
-        pygame.image.load("dolphin2.png"),
-        pygame.image.load("dolphin3.png"),
-        pygame.image.load("dolphin4.png"),
-        pygame.image.load("dolphin5.png"),
-        pygame.image.load("dolphin6.png")
+        pygame.image.load("Images/dolphin1.png"),
+        pygame.image.load("Images/dolphin2.png"),
+        pygame.image.load("Images/dolphin3.png"),
+        pygame.image.load("Images/dolphin4.png"),
+        pygame.image.load("Images/dolphin5.png"),
+        pygame.image.load("Images/dolphin6.png")
     ]
     curSprite = 0
     degrees = 0
@@ -35,3 +35,6 @@ class player(pygame.sprite.Sprite):
         self.curSprite += 1
         self.curSprite %= 5
         self.image = self.sprites[self.curSprite]
+
+    def rot_center(self, image, angle):
+        rotatedImage = pygame.transform.rotate(image, angle)
