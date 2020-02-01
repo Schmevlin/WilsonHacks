@@ -18,7 +18,7 @@ class player(pygame.sprite.Sprite):
         pygame.image.load("Images/dolphin5oof.png"),
         pygame.image.load("Images/dolphin6oof.png")
     ]]
-    dead= 0
+    dead = 0
     curSprite = 0
     degrees = 0
     dist = math.sqrt((200 / 2)**2 + (100 / 2)**2)
@@ -28,7 +28,7 @@ class player(pygame.sprite.Sprite):
 
     def __init__(self, x, y, screen, depth):
         pygame.sprite.Sprite.__init__(self)
-        self.image = self.sprites[self.curSprite]
+        self.image = self.sprites[self.dead][self.curSprite]
         self.screen = screen
         self.depth = depth
         self.x, self.y = x, y

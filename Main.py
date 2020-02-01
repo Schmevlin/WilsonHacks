@@ -1,9 +1,13 @@
 import pygame
 import Player
 import Net
+import random
 import math
 
 pygame.init()
+pygame.font.init()
+myfont = pygame.font.SysFont('Arial', 30)
+
 width = 1000
 height = 1000
 size = width, height
@@ -11,11 +15,15 @@ white = 255, 255, 255
 black = 0, 0, 0
 blue = 0, 0, 255
 maxDepth = 1000
+done = False
 control = True
 won = False
+boat = pygame.image.load("Images/boat.png")
+boatX = width / 4
+endCondition = 0
 
 coolFacts = [
-    r"in 2013 over 90 million pounds of fish were caught",
+    r"In 2013 over 90 million pounds of fish were caught",
     r"About 38.5 million tonnes of bycatch results from current preferred fishing practice each year",
     r"Over just 40 years there has been a decrease recorded in marine species of 39%",
     r"Almost 30% of fish stocks commercially fished are over-fished",
@@ -23,16 +31,15 @@ coolFacts = [
     r"Today, each person eats on average 19.2kg of fish a year – around twice as much as 50 years ago"
 ]
 
-screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
-player = Player.player(width / 2, height * 3 / 4, screen, maxDepth)
+screen = pygame.display.set_mode(size)
+player = Player.player(width / 2, height * 2 / 3, screen, maxDepth)
 nets = []
 
 changeSpriteMaybe = 0
-while 1:
+while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
+            done = True
         
 
     keys = pygame.key.get_pressed()
@@ -53,8 +60,8 @@ while 1:
     elif keys[pygame.K_a]:
         player.rotate(math.pi / 24)
 
-    if (depth < 0):
-        win = True
+    if (player.depth < 0):
+        won = True
 
     blue = 50 + 175 * (1 - (player.depth / maxDepth))
     if (blue > 225):
@@ -63,9 +70,17 @@ while 1:
     else:
         top = False
 
+    if (blue < 10):
+        endCondition = 1
+        done = True
+
+
     screen.fill((0, 0, blue))
 
     pygame.draw.rect(screen, (230, 230, 255), pygame.Rect(0, 0, width, -player.depth))
+    if (-player.depth > 0):
+        boatX -= dists[0]
+        screen.blit(boat, [boatX, -player.depth - 140])
 
     for net in nets:
         if (not net.theChosenNet):
@@ -78,6 +93,9 @@ while 1:
                 player.x = net.x + (net.actualWidth / 2)
                 player.y = net.y + (net.actualHeight / 2)
     
+    textsurface = myfont.render(coolFacts[random.randint(0, 5)], False, white)
+    # screen.blit(textsurface, [100, 100])
+
     for net in nets:
         net.drawBack()
 
@@ -87,7 +105,7 @@ while 1:
     for net in nets:
         net.drawFront()
 
-    if (changeSpriteMaybe % 60 == 2 and control):
+    if (changeSpriteMaybe % 60 == 2 and control and not won):
         nets.append(Net.net(width, height, screen, 3))
 
     for net in nets:
@@ -100,3 +118,17 @@ while 1:
     pygame.display.flip()
     pygame.time.wait(16)
     changeSpriteMaybe += 1 
+
+# end logic
+
+if (endCondition == 0):
+    pygame.quit()
+if (endCondition == 1):
+    textsurface = myfont.render(coolFacts[random.randint(0, 6)], False, white)
+    screen.fill(black)
+    screen.blit(textsurface, [0, 0])
+    pygame.display.flip()
+    while(1):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
