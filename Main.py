@@ -25,5 +25,6 @@ while 1:
     screen.fill(white)
 
     player.draw()
+    player.nextSprite()
     #pygame.draw.rect(screen, black, player.image)
     pygame.display.flip()
