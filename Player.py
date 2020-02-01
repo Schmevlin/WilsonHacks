@@ -28,7 +28,7 @@ class player(pygame.sprite.Sprite):
 
     def __init__(self, x, y, screen, depth):
         pygame.sprite.Sprite.__init__(self)
-        self.image = self.sprites[self.curSprite]
+        self.image = self.sprites[self.dead][self.curSprite]
         self.screen = screen
         self.depth = depth
         self.x, self.y = x, y

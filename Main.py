@@ -2,6 +2,7 @@ import pygame
 import Player
 import Net
 import math
+import Bubble
 
 pygame.init()
 width = 1000
@@ -23,9 +24,12 @@ coolFacts = [
     r"Today, each person eats on average 19.2kg of fish a year – around twice as much as 50 years ago"
 ]
 
-screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+screen = pygame.display.set_mode(size)
 player = Player.player(width / 2, height * 3 / 4, screen, maxDepth)
 nets = []
+bubbles = []
+for i in range(0, 20):
+    bubbles.append(Bubble.bubble(width, height, screen))
 
 changeSpriteMaybe = 0
 while 1:
@@ -53,7 +57,7 @@ while 1:
     elif keys[pygame.K_a]:
         player.rotate(math.pi / 24)
 
-    if (depth < 0):
+    if (player.depth < 0):
         win = True
 
     blue = 50 + 175 * (1 - (player.depth / maxDepth))
@@ -64,6 +68,9 @@ while 1:
         top = False
 
     screen.fill((0, 0, blue))
+    for bubble in bubbles:
+        bubble.move(dists)
+        bubble.draw()
 
     pygame.draw.rect(screen, (230, 230, 255), pygame.Rect(0, 0, width, -player.depth))
 
@@ -93,6 +100,10 @@ while 1:
     for net in nets:
         if (net.y > height or net.y < -300 or net.x > width or net.x < -300):
             nets.remove(net)
+    for bubble in bubbles:
+        if (bubble.y > height or bubble.y < -25 or bubble.x > width or bubble.x < -25):
+            bubbles.remove(bubble)
+            bubbles.append(Bubble.bubble(width, height, screen))
 
     if(changeSpriteMaybe % 5 == 0):
         player.nextSprite()
