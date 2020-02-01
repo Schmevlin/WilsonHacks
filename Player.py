@@ -69,3 +69,7 @@ class player(pygame.sprite.Sprite):
             return True
         else:
             return False
+    
+    def moveY(self, dist):
+        self.updateRect()
+        self.depth -= dist
