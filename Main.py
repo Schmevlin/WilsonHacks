@@ -27,7 +27,7 @@ while 1:
     if keys[pygame.K_d]:
         player.rotate(-.5)
     if keys[pygame.K_a]:
-        player.rotate(-.1)
+        player.rotate(.5)
 
     screen.fill(white)
 
