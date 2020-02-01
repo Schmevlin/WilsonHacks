@@ -3,6 +3,7 @@ import Player
 import Net
 import random
 import math
+import Bubble
 
 pygame.init()
 pygame.font.init()
@@ -34,6 +35,9 @@ coolFacts = [
 screen = pygame.display.set_mode(size)
 player = Player.player(width / 2, height * 2 / 3, screen, maxDepth)
 nets = []
+bubbles = []
+for i in range(0, 20):
+    bubbles.append(Bubble.bubble(width, height, screen))
 
 changeSpriteMaybe = 0
 while not done:
@@ -76,6 +80,9 @@ while not done:
 
 
     screen.fill((0, 0, blue))
+    for bubble in bubbles:
+        bubble.move(dists)
+        bubble.draw()
 
     pygame.draw.rect(screen, (230, 230, 255), pygame.Rect(0, 0, width, -player.depth))
     if (-player.depth > 0):
@@ -111,6 +118,10 @@ while not done:
     for net in nets:
         if (net.y > height or net.y < -300 or net.x > width or net.x < -300):
             nets.remove(net)
+    for bubble in bubbles:
+        if (bubble.y > height or bubble.y < -25 or bubble.x > width or bubble.x < -25):
+            bubbles.remove(bubble)
+            bubbles.append(Bubble.bubble(width, height, screen))
 
     if(changeSpriteMaybe % 5 == 0):
         player.nextSprite()
