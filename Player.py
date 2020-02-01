@@ -12,21 +12,21 @@ class player(pygame.sprite.Sprite):
     ]
     curSprite = 0
     degrees = 0
+    dist = math.sqrt((200 / 2)**2 + (100 / 2)**2)
 
-    def __init__(self, width, height, x, y, screen):
+    def __init__(self, x, y, screen):
         pygame.sprite.Sprite.__init__(self)
         self.image = self.sprites[self.curSprite]
         self.screen = screen
         self.x, self.y = x, y
-        self.width, self.height = width, height
     
     def draw(self):
         m_screen = self.screen
-        m_screen.blit(pygame.transform.rotate(self.image, self.degrees), [self.x, self.y])
+        m_screen.blit(pygame.transform.rotate(self.image, toDegrees(self.degrees)), [self.actualX(), self.actualY()])
 
     def move(self, dist):
-        self.x += dist * math.cos((self.degrees - 90) * math.pi / 180)
-        self.y += dist * math.sin((self.degrees - 90) * math.pi / 180)
+        self.x += dist * math.cos(self.degrees)
+        self.y += dist * math.sin(self.degrees)
 
     def rotate(self, degrees):
         self.degrees += degrees
@@ -36,5 +36,14 @@ class player(pygame.sprite.Sprite):
         self.curSprite %= 5
         self.image = self.sprites[self.curSprite]
 
-    def rot_center(self, image, angle):
-        rotatedImage = pygame.transform.rotate(image, angle)
+    def actualX(self):
+        return self.x - (self.width / 2) + math.sin(math.pi + self.degrees)
+
+    def actualY(self):
+        return self.y - (self.height / 2)
+
+    def toRadians(self, angle):
+        return angle * (math.pi / 180)
+
+    def toDegrees(self, angle):
+        return angle * (180 / math.pi)

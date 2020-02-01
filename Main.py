@@ -10,7 +10,7 @@ black = 0, 0, 0
 blue = 0, 0, 255
 
 screen = pygame.display.set_mode(size)
-player = Player.player(100, 100, 100, 100, screen)
+player = Player.player(100, 100, screen)
 
 changeSpriteMaybe = 0
 while 1:
