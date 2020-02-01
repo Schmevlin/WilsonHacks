@@ -10,6 +10,7 @@ class player(pygame.sprite.Sprite):
         pygame.image.load("dolphin6.png")
     ]
     curSprite = 0
+    degrees = 0
 
     def __init__(self, width, height, x, y, screen):
         pygame.sprite.Sprite.__init__(self)
@@ -20,14 +21,14 @@ class player(pygame.sprite.Sprite):
     
     def draw(self):
         m_screen = self.screen
-        m_screen.blit(self.image, [self.x, self.y])
+        m_screen.blit(pygame.transform.rotate(self.image, self.degrees), [self.x, self.y])
 
     def move(self, x, y):
         self.x += x
         self.y += y
 
     def rotate(self, degrees):
-        pygame.transform.rotate(self.image, degrees)
+        self.degrees += degrees
 
     def nextSprite(self):
         self.curSprite += 1
