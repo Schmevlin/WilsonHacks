@@ -124,10 +124,13 @@ while not done:
     for net in nets:
         net.drawFront()
 
-    pygame.draw.rect(screen, black, pygame.Rect(width / 20, height * 2 / 5, width / 10, height / 5))
-    pygame.draw.rect(screen, (0, 0, 255), pygame.Rect((width / 20) + (width / 100), (height * 2 / 5) + (width / 100), (width / 10) - (width * 2 / 100), (height / 5) - 2 * (width / 100)))
+    pygame.draw.rect(screen, black, pygame.Rect(width / 20, (height * 2 / 5) - 50, width / 10, (height / 5) + 50))
+    pygame.draw.rect(screen, (0, 0, 255), pygame.Rect((width / 20) + (width / 100), (height * 2 / 5) + (width / 100) - 50, (width / 10) - (width * 2 / 100), ((height / 5) - 2 * (width / 100)) + 50))
     bottom = (height * 2 / 5) + (width / 100) + (height / 5) - 2 * (width / 100)
-    pygame.draw.line(screen, (255, 0, 0), ((width / 20) + (width / 100), height - (bottom - ((height / 5) - 2 * (width / 100)) * (player.depth / (maxDepth + 457)))), ((width / 20) + (width / 100) + ((width / 10) - (width * 2 / 100)), height - (bottom - ((height / 5) - 2 * (width / 100)) * (player.depth / (maxDepth + 457)))))
+    y = height - (bottom - ((height / 5) - 2 * (width / 100)) * (player.depth / (maxDepth + 457)))
+    if y < (height * 2 / 5) + (width / 100) - 50:
+        y = (height * 2 / 5) + (width / 100) - 50
+    pygame.draw.line(screen, (255, 0, 0), ((width / 20) + (width / 100), y), ((width / 20) + (width / 100) + ((width / 10) - (width * 2 / 100)), y))
 
     if (changeSpriteMaybe % 45 == 0 and control and not won):
         nets.append(Net.net(width, height, screen, 4))
