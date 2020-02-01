@@ -7,6 +7,7 @@ height = 550
 size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
+blue = 0, 0, 255
 
 screen = pygame.display.set_mode(size)
 player = Player.player(100, 100, 100, 100, screen)
@@ -18,6 +19,7 @@ while 1:
             pygame.quit()
             exit()
         
+
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
@@ -29,7 +31,7 @@ while 1:
     if keys[pygame.K_a]:
         player.rotate(.5)
 
-    screen.fill(white)
+    screen.fill(blue)
 
     player.draw()
 

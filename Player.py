@@ -25,8 +25,8 @@ class player(pygame.sprite.Sprite):
         m_screen.blit(pygame.transform.rotate(self.image, self.degrees), [self.x, self.y])
 
     def move(self, dist):
-        self.x += dist * math.cos(self.degrees - 90)
-        self.y += dist * math.sin(self.degrees - 90)
+        self.x += dist * math.cos((self.degrees - 90) * math.pi / 180)
+        self.y += dist * math.sin((self.degrees - 90) * math.pi / 180)
 
     def rotate(self, degrees):
         self.degrees += degrees
