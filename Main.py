@@ -1,5 +1,6 @@
 import pygame
 import Player
+import Net
 import math
 
 pygame.init()
@@ -12,6 +13,7 @@ blue = 0, 0, 255
 
 screen = pygame.display.set_mode(size)
 player = Player.player(300, 300, screen)
+net = Net.net(width, height, screen, 3)
 
 changeSpriteMaybe = 0
 while 1:
@@ -34,6 +36,9 @@ while 1:
 
     screen.fill(blue)
 
+    if (net.update()):
+        net = Net.net(width, height, screen, 3)
+    net.draw()
     player.draw()
 
     if(changeSpriteMaybe % 5 == 0):
