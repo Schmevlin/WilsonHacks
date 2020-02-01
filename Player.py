@@ -35,7 +35,7 @@ class player(pygame.sprite.Sprite):
         # self.y += dist * math.sin(-self.degrees)
         self.updateRect()
         self.depth += dist * math.sin(-self.degrees)
-        return dist * math.cos(-self.degrees)
+        return [dist * math.cos(-self.degrees), dist * math.sin(-self.degrees)]
 
     def rotate(self, degrees):
         self.degrees += degrees

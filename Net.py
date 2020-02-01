@@ -15,11 +15,9 @@ class net(pygame.sprite.Sprite):
         m_screen = self.screen
         m_screen.blit(self.image, [self.x, self.y])
 
-    def update(self):
-        self.y += self.speed
+    def move(self, dists):
+        self.y += self.speed - dists[1]
         if (self.y > (self.height + 100)) :
             del(self)
             return True
-    
-    def moveRight(self, dist):
-        self.x += dist
+        self.x += -dists[0]

@@ -4,8 +4,8 @@ import Net
 import math
 
 pygame.init()
-width = 600
-height = 600
+width = 1600
+height = 900
 size = width, height
 white = 255, 255, 255
 black = 0, 0, 0
@@ -26,20 +26,29 @@ while 1:
 
     keys = pygame.key.get_pressed()
 
+    dists = [0, 0]
+
     if keys[pygame.K_w]:
-        net.moveRight(player.move(3))
-    if keys[pygame.K_s]:
-        net.moveRight(player.move(-3))
+        dists = player.move(3)
+    elif keys[pygame.K_s]:
+        dists = player.move(-3)
     if keys[pygame.K_d]:
         player.rotate(-math.pi / 24)
-    if keys[pygame.K_a]:
+    elif keys[pygame.K_a]:
         player.rotate(math.pi / 24)
 
-    blue = 50 + 200 * (1 - (player.depth / maxDepth))
+    blue = 50 + 175 * (1 - (player.depth / maxDepth))
+    if (blue > 225):
+        blue = 225
+        top = True
+    else:
+        top = False
 
     screen.fill((0, 0, blue))
 
-    if (net.update()):
+    pygame.draw.rect(screen, (230, 230, 255), pygame.Rect(0, 0, width, -player.depth))
+
+    if (net.move(dists)):
         net = Net.net(width, height, screen, 3)
     net.draw()
     player.draw()
